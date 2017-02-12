@@ -1,0 +1,23 @@
+.welcome {
+  padding: 60px 0;
+  &__title {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  &__button-box {
+    text-align: center;
+  }
+  &__button {
+    display: inline-block;
+    line-height: 32px;
+    padding: 0 10px;
+    background-color: var(--blue);
+    color: #ffffff;
+    border-radius: 4px;
+    transition: .3s ease;
+    &:hover {
+      background-color: rgba(83,142,210, 0.85);
+    }
+  }
+}
