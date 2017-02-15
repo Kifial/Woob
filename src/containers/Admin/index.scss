@@ -1,0 +1,23 @@
+.admin {
+  display: flex;
+  &__sidebar {
+    position: relative;
+    width: 200px;
+    border: solid var(--blue);
+    border-width: 0 1px 0 0;
+    padding: 10px 0;
+    line-height: 28px;
+  }
+  &__sidebar-item {
+    padding: 0 0 0 15px;
+    cursor: pointer;
+    transition: .3s ease;
+    &:hover {
+      background-color: #eaeaea;
+    }
+  }
+  &__body {
+    flex: 1 1;
+    position: relative;
+  }
+}

@@ -17,7 +17,12 @@ class MatchList extends React.Component {
       <div className="match-list">
         {this.props.items.map((item) =>
           <MatchItem
-            key={item.id}
+            key={item._id}
+            id={item._id}
+            A={item.A}
+            B={item.B}
+            date={item.date}
+            time={item.time}
           />
         )}
       </div>

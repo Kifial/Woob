@@ -31,6 +31,9 @@ a {
   position: relative;
   width: 1200px;
   margin: 0 auto;
+  &--mb {
+    margin: 0 auto 15px;
+  }
 }
 .input-error {
   border-color: #bd2222;

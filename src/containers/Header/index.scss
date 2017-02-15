@@ -140,6 +140,7 @@
   }
   &__user-popup-item {
     position: relative;
+    display: block;
     padding: 0 6px;
     cursor: pointer;
     transition: .3s ease;

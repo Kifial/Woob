@@ -147,7 +147,7 @@ const mapDispatchToProps = (dispatch) => {
         type: 'VALIDATE_REGISTRATION_INPUT'
       })
     },
-    handleSubmit: (login, password, loginOk, passwordOk, confirmOk) => {
+    handleSubmit: (login, password, confirm, loginOk, passwordOk, confirmOk) => {
       if (loginOk && passwordOk && confirmOk && password == confirm) {
         submitRegistrationForm(login, password, dispatch);
       } else {

@@ -1,0 +1,87 @@
+.admin-matches {
+  padding: 10px 20px;
+  &__controls {
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+  &__search {
+    float: left;
+  }
+  &__search-input {
+    position: relative;
+    width: 200px;
+    line-height: 26px;
+    height: 28px;
+    border: 1px solid var(--blue);
+    border-radius: 4px;
+    padding: 0 6px;
+  }
+  &__buttons {
+    float: right;
+  }
+  &__controls-item {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 10px;
+    line-height: 28px;
+    border-radius: 4px;
+    transition: .3s ease;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+    &--add {
+      background-color: #22bd22;
+      color: #ffffff;
+    }
+    &--update {
+      background-color: var(--blue);
+      color: #ffffff;
+      margin-right: 15px;
+    }
+    &--delete {
+      background-color: #bd2222;
+      color: #ffffff;
+      margin-right: 15px;
+    }
+    &--hidden {
+      display: none;
+    }
+  }
+  &__table {
+    border: solid var(--blue);
+    border-width: 1px 0 0 1px;
+    margin-bottom: 10px;
+  }
+  &__table-header {
+    display: flex;
+    background-color: rgba(83, 142, 210, 1);
+    color: #ffffff;
+  }
+  &__table-row {
+    display: flex;
+    cursor: pointer;
+    transition: .3s ease;
+    &:hover {
+      background-color: rgba(83, 142, 210, 0.1);
+    }
+    &--active {
+      background-color: rgba(83, 142, 210, 0.3);
+    }
+  }
+  &__table-item {
+    border: solid var(--blue);
+    border-width: 0 1px 1px 0;
+    padding: 0 5px;
+    line-height: 28px;
+    &--title {
+      width: 70%;
+    }
+    &--date {
+      width: 15%;
+    }
+    &--time {
+      width: 15%;
+    }
+  }
+}

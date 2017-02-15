@@ -1,0 +1,61 @@
+.match-item {
+  position: relative;
+  padding: 10px 0;
+  height: 220px;
+  font-size: 0;
+  &__opponent {
+    display: inline-block;
+    vertical-align: top;
+    width: 40%;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    &:hover {
+      .match-item__opponent-coeff {
+        color: #bd2222;
+      }
+      .match-item__opponent-name {
+        letter-spacing: 1px;
+      }
+    }
+  }
+  &__opponent-name {
+    font-size: 18px;
+    margin-bottom: 10px;
+    transition: .5s ease-out;
+  }
+  &__opponent-img {
+    position: relative;
+    display: inline-block;
+    width: 128px;
+    height: 128px;
+    border: 1px solid var(--black);
+    margin-bottom: 10px;
+  }
+  &__opponent-coeff {
+    transition: .3s ease;
+    font-weight: 700;
+  }
+  &__versus {
+    display: inline-block;
+    vertical-align: top;
+    width: 20%;
+    height: 100%;
+    font-size: 16px;
+    text-align: center;
+  }
+  &__versus-box {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  &__versus-date {
+    margin-bottom: 20px;
+  }
+  &__versus-vs {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+}

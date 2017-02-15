@@ -49,7 +49,13 @@ class Header extends React.Component {
           <div className="header__user-name" onClick={this.props.triggerUserPopup}>
             {this.props.login}
           </div>
-          <div className={'header__user-popup ' + (this.props.userPopupHidden ? '' : 'header__user-popup--active')}>
+          <div
+            className={'header__user-popup ' + (this.props.userPopupHidden ? '' : 'header__user-popup--active')}
+            onClick={this.props.triggerUserPopup}
+          >
+            {this.props.admin ?
+              <Link to="/admin" className="header__user-popup-item">Admin</Link> : ''
+            }
             <div className="header__user-popup-item" onClick={this.handleUserLogOut}>Log out</div>
           </div>
           <div
@@ -74,7 +80,8 @@ const mapStateToProps = (state) => {
   return {
     login: state.account.login,
     credits: state.account.credits,
-    userPopupHidden: state.popups.headerPopups.userPopupHidden
+    userPopupHidden: state.popups.headerPopups.userPopupHidden,
+    admin: state.account.admin
   }
 };
 

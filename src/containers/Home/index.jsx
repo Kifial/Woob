@@ -9,8 +9,7 @@ class Home extends React.Component {
   }
   render() {
     return (
-      <div className="home main-box">
-        <div className="home__title">Here are all available matches</div>
+      <div className="home">
         <MatchList />
       </div>
     )
