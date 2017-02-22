@@ -1,0 +1,50 @@
+.user-bets-item {
+  padding: 10px 15px;
+  &__title {
+    font-weight: 700;
+  }
+  &__date-time  {
+    font-size: 14px;
+    color: #999999;
+  }
+  &__bet {
+    font-size: 14px;
+    margin-bottom: 10px;
+    strong {
+      color: var(--blue);
+    }
+  }
+  &__status-box {
+    position: relative;
+  }
+  &__status {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    margin-right: 30px;
+  }
+  &__submit {
+    display: inline-block;
+    vertical-align: middle;
+    background-color: var(--blue);
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 0 10px;
+    line-height: 26px;
+    font-size: 14px;
+    transition: .3s ease;
+    cursor: pointer;
+    &--hidden {
+      display: none;
+    }
+    &--lose {
+      background-color: #bb2222;
+    }
+    &--win {
+      background-color: #22bb22;
+    }
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

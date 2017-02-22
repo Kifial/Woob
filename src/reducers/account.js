@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 const account = (
   state = {
     login: '',
-    credits: '0.00',
+    credits: 0,
     admin: false
   },
   action
@@ -24,8 +24,20 @@ const account = (
       browserHistory.push('/welcome');
       return Object.assign({}, state, {
         login: '',
-        credits: '0.00',
+        credits: 0,
         admin: false
+      });
+    case 'ACCOUNT_ADD_CREDITS':
+      return Object.assign({}, state, {
+        credits: state.credits + +action.credits
+      });
+    case 'BET_CREATED':
+      return Object.assign({}, state, {
+        credits: state.credits - action.credits
+      });
+    case 'BET_SUBMITTED':
+      return Object.assign({}, state, {
+        credits: state.credits + action.credits
       });
     default:
       return state;

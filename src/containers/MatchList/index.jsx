@@ -1,7 +1,7 @@
 import React from 'react';
 import MatchItem from '../../components/MatchItem/index.jsx';
 import { connect } from 'react-redux';
-import { getMatchItems } from '../../actions/api';
+import { getMatchesByFilter } from '../../actions/api';
 
 if (typeof window != 'undefined' && window.document) require('./index.scss');
 
@@ -23,6 +23,7 @@ class MatchList extends React.Component {
             B={item.B}
             date={item.date}
             time={item.time}
+            handleBet={this.props.handleBet}
           />
         )}
       </div>
@@ -39,7 +40,18 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getMatchItems: () => {
-      getMatchItems(dispatch);
+      getMatchesByFilter('all', dispatch);
+    },
+    handleBet: (id, name, coeff, date, time, bet) => {
+      dispatch({
+        type: 'MAKE_BET_POPUP_SET_INFO',
+        id,
+        name,
+        coeff,
+        date,
+        time,
+        bet
+      })
     }
   }
 };

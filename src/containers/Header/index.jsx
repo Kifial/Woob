@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { getUserInfo } from '../../actions/api';
+import HeaderCreditsPopup from '../HeaderCreditsPopup/index.jsx';
 
 if (typeof window != 'undefined' && window.document) require('./index.scss');
 
@@ -37,13 +38,18 @@ class Header extends React.Component {
       </nav>;
     let logged = () =>
       <nav className="header__nav header__nav--logged">
+        <Link
+          to="/bets"
+          className="header__button header__button--bets"
+        >
+          My bets
+        </Link>
         <div className="header__credits-box">
           <div className="header__credits">
-            Credits: {this.props.credits}
+            Credits: {this.props.credits.toFixed(2)}
           </div>
-          <div className="header__credits-button">
-
-          </div>
+          <div className="header__credits-button" onClick={this.props.triggerCreditsPopup}></div>
+          <HeaderCreditsPopup triggerCreditsPopup={this.props.triggerCreditsPopup} />
         </div>
         <div className="header__user-box">
           <div className="header__user-name" onClick={this.props.triggerUserPopup}>
@@ -99,6 +105,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({
         type: 'HANDLE_USER_LOG_OUT'
       });
+    },
+    triggerCreditsPopup: () => {
+      dispatch({
+        type: 'TRIGGER_CREDITS_POPUP'
+      })
     }
   }
 };

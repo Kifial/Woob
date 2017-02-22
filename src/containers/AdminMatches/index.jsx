@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getAdminMatches, deleteMatch } from '../../actions/api';
 import AdminMatchesPopup from '../AdminMatchesPopup/index.jsx';
+import AdminSetWinnerPopup from '../../components/AdminSetWinnerPopup/index.jsx';
 
 if (typeof window != 'undefined' && window.document) require('./index.scss');
 
@@ -10,6 +11,9 @@ class AdminMatches extends React.Component {
     super(props);
     this.setMatchesPopupInfo = this.setMatchesPopupInfo.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.sortByDate = this.sortByDate.bind(this);
+    this.handleMatchClick = this.handleMatchClick.bind(this);
+    this.setWinnerPopupInfo = this.setWinnerPopupInfo.bind(this);
     this.state = {
       searchTimeout: ''
     };
@@ -35,6 +39,19 @@ class AdminMatches extends React.Component {
       searchTimeout
     });
   }
+  sortByDate() {
+    this.props.sortByDate(this.props.sortByDateType);
+  }
+  handleMatchClick(item) {
+    this.props.handleMatchClick(item._id, item.A.name, item.B.name);
+  }
+  setWinnerPopupInfo() {
+    this.props.setWinnerPopupInfo(
+      this.props.selectedMatch,
+      this.props.selectedMatchA,
+      this.props.selectedMatchB
+    );
+  }
   render() {
     let deleteButtonClass =
       "admin-matches__controls-item admin-matches__controls-item--delete" +
@@ -43,6 +60,8 @@ class AdminMatches extends React.Component {
       "admin-matches__controls-item admin-matches__controls-item--update" +
       (this.props.selectedMatch ? '' : ' admin-matches__controls-item--hidden');
     let addButtonClass = "admin-matches__controls-item admin-matches__controls-item--add";
+    let setWinnerButton = "admin-matches__controls-item admin-matches__controls-item--set-winner" +
+      (this.props.selectedMatch ? '' : ' admin-matches__controls-item--hidden');
     return (
       <div className="admin-matches">
         <div className="admin-matches__controls">
@@ -55,6 +74,12 @@ class AdminMatches extends React.Component {
               value={this.props.search}
               onChange={this.handleSearch}
             />
+            <div
+              className={setWinnerButton}
+              onClick={this.setWinnerPopupInfo}
+            >
+              Set winner
+            </div>
           </div>
           <div className="admin-matches__buttons">
             <div
@@ -70,8 +95,17 @@ class AdminMatches extends React.Component {
         <div className="admin-matches__table">
           <div className="admin-matches__table-header">
             <div className="admin-matches__table-item admin-matches__table-item--title">Title</div>
-            <div className="admin-matches__table-item admin-matches__table-item--date">Date</div>
+            <div
+              className={
+                'admin-matches__table-item admin-matches__table-item--date admin-matches__table-item--date-header ' +
+                (this.props.sortByDateType == 'farest' ? 'admin-matches__table-item--date-farest' : '')
+              }
+              onClick={this.sortByDate}
+            >
+              Date
+            </div>
             <div className="admin-matches__table-item admin-matches__table-item--time">Time</div>
+            <div className="admin-matches__table-item admin-matches__table-item--status">Status</div>
           </div>
           {this.props.matches.map((item) => {
             let title = `${item.A.name}(${item.A.coeff}) vs. ${item.B.name}(${item.B.coeff})`;
@@ -83,26 +117,34 @@ class AdminMatches extends React.Component {
                   'admin-matches__table-row ' +
                   (this.props.selectedMatch == item._id ? 'admin-matches__table-row--active' : '')
                 }
-                onClick={() => this.props.handleMatchClick(item._id)}
+                onClick={() => this.handleMatchClick(item)}
               >
                 <div className="admin-matches__table-item admin-matches__table-item--title">{title}</div>
                 <div className="admin-matches__table-item admin-matches__table-item--date">{item.date}</div>
                 <div className="admin-matches__table-item admin-matches__table-item--time">{item.time}</div>
+                <div className="admin-matches__table-item admin-matches__table-item--status">
+                  {item.winner ? `winner: ${item.winner}` : 'waiting'}
+                </div>
               </div>
             )
           })}
         </div>
         <AdminMatchesPopup />
+        <AdminSetWinnerPopup />
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
+  const admin = state.admin.adminMatches;
   return {
-    matches: state.admin.visibleMatches,
-    selectedMatch: state.admin.selectedMatch,
-    search: state.admin.search
+    matches: admin.visibleMatches,
+    selectedMatch: admin.selectedMatch,
+    selectedMatchA: admin.selectedMatchA,
+    selectedMatchB: admin.selectedMatchB,
+    search: admin.search,
+    sortByDateType: admin.sortByDateType
   }
 };
 
@@ -116,10 +158,12 @@ const mapDispatchToProps = (dispatch) => {
         type: 'ADMIN_TRIGGER_MATCH_POPUP'
       })
     },
-    handleMatchClick: (id) => {
+    handleMatchClick: (id, A, B) => {
       dispatch({
         type: 'ADMIN_HANDLE_MATCH_CLICK',
-        id
+        id,
+        A,
+        B
       })
     },
     setMatchesPopupInfo: (item) => {
@@ -140,6 +184,25 @@ const mapDispatchToProps = (dispatch) => {
     handleSearchResults: () => {
       dispatch({
         type: 'ADMIN_HANDLE_SEARCH_RESULTS'
+      })
+    },
+    sortByDate: (sortByDateType) => {
+      if (sortByDateType == 'farest') {
+        dispatch({
+          type: 'ADMIN_SORT_BY_CLOSEST_DATE'
+        })
+      } else if (sortByDateType == 'closest') {
+        dispatch({
+          type: 'ADMIN_SORT_BY_FAREST_DATE'
+        })
+      }
+    },
+    setWinnerPopupInfo: (id, A, B) => {
+      dispatch({
+        type: 'WINNER_POPUP_SET_INFO',
+        id,
+        A,
+        B
       })
     }
   }

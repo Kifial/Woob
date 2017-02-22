@@ -1,22 +1,23 @@
 .match-item {
   position: relative;
-  padding: 10px 0;
-  height: 220px;
   font-size: 0;
   &__opponent {
     display: inline-block;
     vertical-align: top;
     width: 40%;
+    padding: 10px 0;
     font-size: 16px;
     text-align: center;
     cursor: pointer;
+    transition: .3s ease;
+    &:first-child {
+      border-radius: 4px 0 0 4px;
+    }
+    &:last-child {
+      border-radius: 0 4px 4px 0;
+    }
     &:hover {
-      .match-item__opponent-coeff {
-        color: #bd2222;
-      }
-      .match-item__opponent-name {
-        letter-spacing: 1px;
-      }
+      background-color: rgba(83, 142, 210, 0.2);
     }
   }
   &__opponent-name {
@@ -41,6 +42,7 @@
     vertical-align: top;
     width: 20%;
     height: 100%;
+    padding: 10px 0;
     font-size: 16px;
     text-align: center;
   }
@@ -52,10 +54,10 @@
     flex-direction: column;
   }
   &__versus-date {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   &__versus-vs {
-    font-size: 36px;
-    margin-bottom: 20px;
+    font-size: 26px;
+    margin-bottom: 10px;
   }
 }

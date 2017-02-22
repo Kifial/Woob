@@ -7,17 +7,21 @@ import Login from '../containers/Login/index.jsx';
 import Home from '../containers/Home/index.jsx';
 import Admin from '../containers/Admin/index.jsx';
 import AdminMatches from '../containers/AdminMatches/index.jsx';
+import UserBets from '../containers/UserBets/index.jsx';
+import AdminBets from '../containers/AdminBets/index.jsx';
 import { checkAuth, checkAdminAuth } from '../actions/router';
 
 const routes = (
   <Route path="/" component={App}>
     <Route onEnter={checkAuth}>
       <Route path="home" component={Home} />
+      <Route path="bets" component={UserBets} />
     </Route>
     <Route onEnter={checkAdminAuth}>
       <Route path="admin" component={Admin}>
         <IndexRedirect to="matches" />
         <Route path="matches" component={AdminMatches} />
+        <Route path="bets" component={AdminBets} />
       </Route>
     </Route>
     <IndexRedirect to="/home" />

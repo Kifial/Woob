@@ -77,19 +77,6 @@ export const getUserInfo = (login, dispatch) => {
     });
 };
 
-export const getMatchItems = (dispatch) => {
-  fetch('/getMatchItems')
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      dispatch({
-        type: 'SET_MATCH_ITEMS',
-        data: data.items
-      });
-    });
-};
-
 export const getAdminMatches = (dispatch) => {
   fetch('/getAdminMatches')
     .then((response) => {
@@ -170,6 +157,182 @@ export const deleteMatch = (id, dispatch) => {
       } else {
         dispatch({
           type: 'ADMIN_MATCH_NOT_DELETED'
+        })
+      }
+    })
+};
+
+export const addCreditsToAccount = (credits, login, dispatch) => {
+  fetch('/addCreditsToAccount', {
+    method: 'post',
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify({ credits, login })
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message == 'ok') {
+        dispatch({
+          type: 'ACCOUNT_ADD_CREDITS',
+          credits: data.credits
+        });
+        dispatch({
+          type: 'CREDITS_POPUP_SUCCESS'
+        });
+      }
+    })
+};
+
+export const getMatchesByFilter = (filter, dispatch) => {
+  fetch(`/getMatches/${filter}`)
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      if (data.message == 'ok') {
+        dispatch({
+          type: 'SET_HOME_FILTER',
+          filter
+        });
+        dispatch({
+          type: 'SET_MATCH_ITEMS',
+          items: data.items
+        });
+      }
+    })
+};
+
+export const getMatchesByUser = (login, dispatch) => {
+  fetch(`/getUserMatches/${login}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message == 'ok') {
+        dispatch({
+          type: 'SET_HOME_FILTER',
+          filter: 'user'
+        });
+        dispatch({
+          type: 'SET_MATCH_ITEMS',
+          items: data.items
+        });
+      }
+    })
+};
+
+export const makeBet = (id, login, betSide, credits, winCredits, dispatch) => {
+  let data = {
+    id,
+    login,
+    betSide,
+    credits,
+    winCredits
+  };
+  fetch('makeBet', {
+    method: 'post',
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message == 'ok') {
+        dispatch({
+          type: 'BET_CREATED',
+          credits: data.credits
+        })
+      }
+    })
+};
+
+export const getUserBets = (login, dispatch) => {
+  fetch(`/getUserBets/${login}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message == 'ok') {
+        dispatch({
+          type: 'SET_BETS_ITEMS',
+          items: data.items
+        })
+      }
+    });
+};
+
+export const setWinner = (id, winner, dispatch) => {
+  let args = {
+    id,
+    winner
+  };
+  fetch('/setWinner', {
+    method: 'put',
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify(args)
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message == 'ok') {
+        dispatch({
+          type: 'WINNER_POPUP_CLOSE'
+        });
+        dispatch({
+          type: 'ADMIN_SET_WINNER',
+          id: data.id,
+          winner: data.winner
+        });
+      }
+    })
+};
+
+export const submitBet = (id, status, credits, dispatch) => {
+  let args = {
+    id,
+    status,
+    credits
+  };
+  fetch('/submitBet', {
+    method: 'put',
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify(args)
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message == 'ok') {
+        dispatch({
+          type: 'BET_SUBMITTED',
+          id: data.id,
+          credits: data.credits
+        })
+      }
+    })
+};
+
+export const getBets = (dispatch) => {
+  fetch('/getBets')
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.message = 'ok') {
+        dispatch({
+          type: 'SET_ADMIN_BETS',
+          items: data.items
         })
       }
     })
